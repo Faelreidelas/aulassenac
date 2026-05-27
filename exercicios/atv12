@@ -1,0 +1,23 @@
+listanome = []
+listaSx = []
+listaIdade = []
+
+
+while True:
+    
+    nome = input("Digite o nome: ")
+    listanome.append(nome)
+    sexo = input("Digite o sexo (M/F): ")
+    listaSx.append(sexo)
+    idade = int(input("Digite a idade: "))
+    listaIdade.append(idade)
+    continuar = input("Deseja continuar? (S/N): ")
+    if continuar.upper() == "N":
+        break
+    else:
+        continue
+
+print("Nomes:", listanome)
+print("Sexo:", listaSx)
+print("Idades:", listaIdade)
+    
