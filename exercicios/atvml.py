@@ -1,10 +1,14 @@
-Produtos = {"COD1: notebook": 1250, "COD2: Asus rog phone 6": 3000, "COD3: laptop i5": 1800}
+loja = {
+    "1": {"nome": "Teclado Mecânico", "preco": 250.00},
+    "2": {"nome": "Mouse Sem Fio", "preco": 120.00},
+    "3": {"nome": "Monitor 24 polegadas", "preco": 850.00}
+}
 
 Carrinho = {}
 
 def calcular_preco_com_desconto(produto, desconto):
-    if produto in Produtos:
-        preco_original = Produtos[produto]
+    if produto in loja:
+        preco_original = loja[produto]["preco"]
         preco_com_desconto = preco_original * (1 - desconto / 100)
         return preco_com_desconto
     else:
@@ -23,24 +27,38 @@ while True:
     escolha = input("Escolha uma opção: ")
     if escolha == "1":
         print("Produtos disponíveis:")
-        for produto, preco in Produtos.items():
-            print(f"{produto}: R${preco:.2f}")
+        for produto, info in loja.items():
+            print(f"{produto}: {info['nome']} - R${info['preco']:.2f}")
     elif escolha == "2":
-        produto = input("Digite o nome do produto: ")
+        produto = input("Digite o código do produto: ")
         desconto = float(input("Digite o percentual de desconto: "))
         preco_final = calcular_preco_com_desconto(produto, desconto)
-        print(f"O preço do {produto} com {desconto}% de desconto é: R${preco_final:.2f}")
+        print(f"O preço do {loja[produto]['nome']} com {desconto}% de desconto é: R${preco_final:.2f}")
     elif escolha == "3":
-        
+        codigo_produto = input("Digite o código do produto para adicionar ao carrinho: ")
+        if codigo_produto in loja:
+            quantidade = int(input("Digite a quantidade: "))
+            if codigo_produto in Carrinho:
+                Carrinho[codigo_produto] += quantidade
+            else:
+                Carrinho[codigo_produto] = quantidade
+            print(f"{quantidade} unidades de {codigo_produto} adicionadas ao carrinho.")
         
     elif escolha == "4":
         print("Itens no carrinho:")
         for produto, quantidade in Carrinho.items():
-            print(f"{produto}: {quantidade}")
+            print(f"{loja[produto]['nome']}: {quantidade}")
 
     elif escolha == "5":
+        print("Finalizando compra...")
+        total = 0
+        for produto, quantidade in Carrinho.items():
+            preco = loja.get(produto, {}).get("preco", 0)
+            total += preco * quantidade
+        print(f"O total da compra é: R${total:.2f}")
+        Carrinho.clear()
+        print("Compra finalizada com sucesso!")
         
-        pass
     elif escolha == "6":
         print("Saindo do programa.")
         break
